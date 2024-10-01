@@ -26,7 +26,7 @@ def draw_gameover(screen):
      
      """
      引数として描画するスクリーンを受け取りブラックアウトさせる。
-     そこにGameOverの文字とこうかとんの画像を描画する。
+     そこにGameOverの文字とこうかとんの画像を描画する
      """
 
      go_screen=pg.Surface((WIDTH,HEIGHT))
