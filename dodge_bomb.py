@@ -16,9 +16,18 @@ DELTA = {
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def sleep(sec):
+
+    """
+    引数：数値を受け取り、それに応じた秒数の間とまる
+    """
     time.sleep(sec)
 
 def draw_gameover(screen):
+     
+     """
+     引数として描画するスクリーンを受け取りブラックアウトさせる。
+     そこにGameOverの文字とこうかとんの画像を描画する。
+     """
 
      go_screen=pg.Surface((WIDTH,HEIGHT))
      go_screen.set_alpha(200)
