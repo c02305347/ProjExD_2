@@ -27,7 +27,9 @@ def draw_gameover(screen):
 
      fonto = pg.font.Font(None, 80)
      txt = fonto.render("Game Over",True, (255,255,255))
-     screen.blit(txt, (400,HEIGHT/2-50))
+     kk_rct = txt.get_rect()
+     kk_rct.center = WIDTH/2,HEIGHT/2
+     screen.blit(txt, kk_rct)
 
      kk_img = pg.transform.rotozoom(pg.image.load("fig/8.png"), 0, 2.5)
      kk_rct = kk_img.get_rect()
@@ -35,7 +37,6 @@ def draw_gameover(screen):
      screen.blit(kk_img, kk_rct)
 
      pg.display.update()
-
 
 def check_bound(obj_rct:pg.Rect) -> tuple[bool,bool]:
 
