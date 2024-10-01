@@ -52,6 +52,16 @@ def check_bound(obj_rct:pg.Rect) -> tuple[bool,bool]:
         heg_check = False
     return wid_check, heg_check
 
+def add_speed():
+    bb_accs = [a for a in range(1,11)]
+    bb_lst = []
+    for r in range(1,11):
+        bb_img = pg.Surface((20*r,20*r))
+        bb_img.set_colorkey((0,0,0))
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        bb_lst.append(bb_img)
+    return bb_accs, bb_lst
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -63,6 +73,7 @@ def main():
     bb_img = pg.Surface((20,20))             #練習２
     pg.draw.circle(bb_img,(255,0,0),(10,10),10)
     bb_rct = bb_img.get_rect()
+    bb_accs, bb_imgs = add_speed()
     bb_rct.centerx = random.randint(0,WIDTH-10)
     bb_rct.centery = random.randint(0,HEIGHT-10)
     bb_img.set_colorkey((0,0,0))
@@ -105,7 +116,14 @@ def main():
         screen.blit(kk_img, kk_rct)
 
         bb_rct.move_ip(vx, vy)
+        stage = min(tmr // 500, 9)  
+        avx = vx * bb_accs[stage]  
+        avy = vy * bb_accs[stage]
+        bb_img = bb_imgs[stage]  
+        
+        bb_rct.move_ip(avx, avy)
         wid_check, heg_check = check_bound(bb_rct)
+
         if not wid_check:
             vx *= -1
         if not heg_check:
