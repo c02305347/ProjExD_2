@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -13,6 +14,28 @@ DELTA = {
     }
                                                     #練習１
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+def sleep(sec):
+    time.sleep(sec)
+
+def draw_gameover(screen):
+
+     go_screen=pg.Surface((WIDTH,HEIGHT))
+     go_screen.set_alpha(200)
+     go_screen.fill(0)
+     screen.blit(go_screen,(0,0))
+
+     fonto = pg.font.Font(None, 80)
+     txt = fonto.render("Game Over",True, (255,255,255))
+     screen.blit(txt, (400,HEIGHT/2-50))
+
+     kk_img = pg.transform.rotozoom(pg.image.load("fig/8.png"), 0, 2.5)
+     kk_rct = kk_img.get_rect()
+     kk_rct.center = 550, 200
+     screen.blit(kk_img, kk_rct)
+
+     pg.display.update()
+
 
 def check_bound(obj_rct:pg.Rect) -> tuple[bool,bool]:
 
@@ -55,6 +78,8 @@ def main():
         screen.blit(bg_img, [0, 0]) 
 
         if kk_rct.colliderect(bb_rct):
+            draw_gameover(screen)
+            sleep(5)
             print("Game Over")
             return
 
