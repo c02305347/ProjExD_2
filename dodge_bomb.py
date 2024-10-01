@@ -14,6 +14,20 @@ DELTA = {
                                                     #練習１
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+def check_bound(obj_rct:pg.Rect) -> tuple[bool,bool]:
+
+    """
+    引数：こうかとん、または、爆弾のRECT
+    戻り値：真理値タプル（横判定結果,縦判定結果）
+    画面内ならTrue、画面外ならFalse
+    """
+
+    wid_check, heg_check = True, True
+    if obj_rct.left < 0 or  WIDTH < obj_rct.right:
+        wid_check = False
+    if obj_rct.top < 0 or HEIGHT < obj_rct.bottom:
+        heg_check = False
+    return wid_check, heg_check
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -31,7 +45,6 @@ def main():
     bb_img.set_colorkey((0,0,0))
 
     vx,vy = +5, +5
-
 
     clock = pg.time.Clock()
     tmr = 0
@@ -58,8 +71,16 @@ def main():
                 sum_mv[1] += tpl[1]
 
         kk_rct.move_ip(sum_mv)
+        if check_bound(kk_rct) != (True, True):
+            kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)
+
         bb_rct.move_ip(vx, vy)
+        wid_check, heg_check = check_bound(bb_rct)
+        if not wid_check:
+            vx *= -1
+        if not heg_check:
+            vy *= -1
         screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
